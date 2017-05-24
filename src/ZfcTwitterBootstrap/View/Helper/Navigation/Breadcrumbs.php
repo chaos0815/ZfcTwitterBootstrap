@@ -30,14 +30,15 @@ class Breadcrumbs extends ZendBreadcrumbs
     /**
      * Returns an HTML string containing an 'a' element for the given page
      *
-     * @param  AbstractPage $page  page to generate HTML for
-     * @param  boolean      $hasParent if the breadcrumb has a parent
+     * @param  AbstractPage $page      page to generate HTML for
+     * @param  bool      $hasParent if the breadcrumb has a parent
+     *
      * @return string
      */
     public function htmlify(AbstractPage $page, $hasParent = false)
     {
         $html = '<li';
-        if (!$hasParent) {
+        if ( ! $hasParent) {
             $html .= ' class="active"';
         }
         $html .= '>';
@@ -49,8 +50,8 @@ class Breadcrumbs extends ZendBreadcrumbs
         $escaper = $this->view->plugin('escapeHtml');
         $label = $escaper($label);
 
-        if ($page->getHref() && ($hasParent || (!$hasParent && $this->getLinkLast()))) {
-            $anchorAttribs = $this->htmlAttribs(array('href' => $page->getHref()));
+        if ($page->getHref() && ($hasParent || ( ! $hasParent && $this->getLinkLast()))) {
+            $anchorAttribs = $this->htmlAttribs(['href' => $page->getHref()]);
             $html .= '<a' . $anchorAttribs . '>' . $label . '</a>';
         } else {
             $html .= $label;
@@ -60,6 +61,7 @@ class Breadcrumbs extends ZendBreadcrumbs
             $html .= '<span class="divider">' . $this->getSeparator() . '</span>';
         }
         $html .= '</li>';
+
         return $html;
     }
 
@@ -69,6 +71,7 @@ class Breadcrumbs extends ZendBreadcrumbs
      *
      * @param  AbstractContainer $container [optional] container to render. Default is
      *                                      to render the container registered in the helper.
+     *
      * @return string
      */
     public function renderStraight($container = null)
@@ -79,7 +82,7 @@ class Breadcrumbs extends ZendBreadcrumbs
         }
 
         // find deepest active
-        if (!$active = $this->findActive($container)) {
+        if ( ! $active = $this->findActive($container)) {
             return '';
         }
 

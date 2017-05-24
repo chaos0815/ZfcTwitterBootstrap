@@ -5,9 +5,10 @@
 
 namespace ZfcTwitterBootstrapTest\View\Helper;
 
+use PHPUnit\Framework\TestCase;
 use ZfcTwitterBootstrap\View\Helper\CloseIcon;
 
-class CloseIconTest extends \PHPUnit_Framework_TestCase
+class CloseIconTest extends TestCase
 {
     protected $helper;
 

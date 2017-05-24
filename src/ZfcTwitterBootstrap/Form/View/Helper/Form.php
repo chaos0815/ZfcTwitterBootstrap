@@ -31,6 +31,7 @@ class Form extends AbstractHelper
      * Set Form Element Helper
      *
      * @param  FormElement $helper
+     *
      * @return self
      */
     public function setElementHelper(FormElement $helper)
@@ -46,8 +47,8 @@ class Form extends AbstractHelper
      */
     public function getElementHelper()
     {
-        if (!$this->formElementHelper) {
-            $this->setElementHelper($this->view->plugin('ztbformelement'));
+        if ( ! $this->formElementHelper) {
+            $this->setElementHelper($this->view->plugin('ztbFormElement'));
         }
 
         return $this->formElementHelper;
@@ -57,6 +58,7 @@ class Form extends AbstractHelper
      * Set Form Helper
      *
      * @param  \Zend\Form\View\Helper\Form $form
+     *
      * @return self
      */
     public function setFormHelper(FormHelper $form)
@@ -74,7 +76,7 @@ class Form extends AbstractHelper
      */
     public function getFormHelper()
     {
-        if (!$this->formHelper) {
+        if ( ! $this->formHelper) {
             $this->setFormHelper($this->view->plugin('form'));
         }
 
@@ -85,6 +87,7 @@ class Form extends AbstractHelper
      * Display a Form
      *
      * @param  \Zend\Form\Form $form
+     *
      * @return string
      */
     public function __invoke(ZendForm $form)
@@ -102,6 +105,7 @@ class Form extends AbstractHelper
      * or a fieldset which is basically an iterator.
      *
      * @param  \Traversable $fieldset
+     *
      * @return string
      */
     public function render(Traversable $fieldset)
@@ -123,6 +127,7 @@ class Form extends AbstractHelper
      * Render a Fieldset
      *
      * @param  \Zend\Form\Fieldset $fieldset
+     *
      * @return string
      */
     public function renderFieldset(Fieldset $fieldset)
@@ -130,13 +135,12 @@ class Form extends AbstractHelper
         $id = $fieldset->getAttribute('id') ?: $fieldset->getName();
         $class = $fieldset->getAttribute('class');
         $label = $fieldset->getLabel();
-        if (!empty($label)) {
+        if ( ! empty($label)) {
             $label = "<legend>$label</legend>";
         }
 
-        return '<fieldset id="fieldset-' . $id . '" class="' . $class . '">'
-            . $label
-            . $this->render($fieldset)
-            . '</fieldset>';
+        return '<fieldset id="fieldset-' . $id . '" class="' . $class . '">' . $label . $this->render(
+                $fieldset
+            ) . '</fieldset>';
     }
 }

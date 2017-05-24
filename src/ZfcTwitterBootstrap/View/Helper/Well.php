@@ -20,8 +20,9 @@ class Well extends AbstractHelper
     /**
      * Invoke Well
      *
-     * @param  string      $content
-     * @param  string      $class
+     * @param  string $content
+     * @param  string $class
+     *
      * @return string|self
      */
     public function __invoke($content = '', $class = '')
@@ -37,6 +38,7 @@ class Well extends AbstractHelper
      * Display a large well
      *
      * @param  string $content
+     *
      * @return string
      */
     public function large($content)
@@ -50,6 +52,7 @@ class Well extends AbstractHelper
      * Display an small well
      *
      * @param  string $content
+     *
      * @return string
      */
     public function small($content)
@@ -64,6 +67,7 @@ class Well extends AbstractHelper
      *
      * @param  string $content
      * @param  string $class
+     *
      * @return string
      */
     public function render($content, $class = '')

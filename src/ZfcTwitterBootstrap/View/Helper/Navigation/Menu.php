@@ -9,8 +9,6 @@ use RecursiveIteratorIterator;
 use Zend\View\Helper\Navigation\Menu as ZendMenu;
 use Zend\Navigation\AbstractContainer;
 use Zend\Navigation\Page\AbstractPage;
-use Zend\View;
-use Zend\View\Exception;
 
 /**
  * Helper for rendering menus from navigation containers
@@ -35,6 +33,7 @@ class Menu extends ZendMenu
      * @param  int|null          $maxDepth           maximum depth
      * @param  bool              $escapeLabels       Whether or not to escape the labels
      * @param  bool              $addClassToListItem Whether or not page class applied to <li> element
+     *
      * @return string
      */
     protected function renderDeepestMenu(
@@ -47,19 +46,19 @@ class Menu extends ZendMenu
         $addClassToListItem,
         $liActiveClass = null
     ) {
-        if (!$active = $this->findActive($container, $minDepth - 1, $maxDepth)) {
+        if ( ! $active = $this->findActive($container, $minDepth - 1, $maxDepth)) {
             return '';
         }
 
         // special case if active page is one below minDepth
         if ($active['depth'] < $minDepth) {
-            if (!$active['page']->hasPages()) {
+            if ( ! $active['page']->hasPages()) {
                 return '';
             }
-        } elseif (!$active['page']->hasPages()) {
+        } elseif ( ! $active['page']->hasPages()) {
             // found pages has no children; render siblings
             $active['page'] = $active['page']->getParent();
-        } elseif (is_int($maxDepth) && $active['depth'] +1 > $maxDepth) {
+        } elseif (is_int($maxDepth) && $active['depth'] + 1 > $maxDepth) {
             // children are below max depth; render siblings
             $active['page'] = $active['page']->getParent();
         }
@@ -68,12 +67,12 @@ class Menu extends ZendMenu
         $html = $indent . '<ul' . $ulClass . '>' . self::EOL;
 
         foreach ($active['page'] as $subPage) {
-            if (!$this->accept($subPage)) {
+            if ( ! $this->accept($subPage)) {
                 continue;
             }
 
             // render li tag and page
-            $liClasses = array();
+            $liClasses = [];
             // Is page active?
             if ($subPage->isActive(true)) {
                 $liClasses[] = 'active';
@@ -106,6 +105,7 @@ class Menu extends ZendMenu
      * @param  bool              $onlyActive         render only active branch?
      * @param  bool              $escapeLabels       Whether or not to escape the labels
      * @param  bool              $addClassToListItem Whether or not page class applied to <li> element
+     *
      * @return string
      */
     protected function renderNormalMenu(
@@ -124,28 +124,30 @@ class Menu extends ZendMenu
         // find deepest active
         $found = $this->findActive($container, $minDepth, $maxDepth);
         if ($found) {
-            $foundPage  = $found['page'];
+            $foundPage = $found['page'];
             $foundDepth = $found['depth'];
         } else {
             $foundPage = null;
         }
 
         // create iterator
-        $iterator = new RecursiveIteratorIterator($container,
-            RecursiveIteratorIterator::SELF_FIRST);
+        $iterator = new RecursiveIteratorIterator(
+            $container, RecursiveIteratorIterator::SELF_FIRST
+        );
         if (is_int($maxDepth)) {
             $iterator->setMaxDepth($maxDepth);
         }
 
         // iterate container
         $prevDepth = -1;
+        /** @var AbstractPage $page */
         foreach ($iterator as $page) {
             $depth = $iterator->getDepth();
             $isActive = $page->isActive(true);
-            if ($depth < $minDepth || !$this->accept($page)) {
+            if ($depth < $minDepth || ! $this->accept($page)) {
                 // page is below minDepth or not accepted by acl/visibility
                 continue;
-            } elseif ($onlyActive && !$isActive) {
+            } elseif ($onlyActive && ! $isActive) {
                 // page is not active itself, but might be in the active branch
                 $accept = false;
                 if ($foundPage) {
@@ -154,8 +156,7 @@ class Menu extends ZendMenu
                         $accept = true;
                     } elseif ($foundPage->getParent()->hasPage($page)) {
                         // page is a sibling of the active page...
-                        if (!$foundPage->hasPages() ||
-                            is_int($maxDepth) && $foundDepth + 1 > $maxDepth) {
+                        if ( ! $foundPage->hasPages() || is_int($maxDepth) && $foundDepth + 1 > $maxDepth) {
                             // accept if active page has no children, or the
                             // children are too deep to be rendered
                             $accept = true;
@@ -163,7 +164,7 @@ class Menu extends ZendMenu
                     }
                 }
 
-                if (!$accept) {
+                if ( ! $accept) {
                     continue;
                 }
             }
@@ -174,7 +175,7 @@ class Menu extends ZendMenu
 
             if ($depth > $prevDepth) {
                 // start new ul tag
-                if ($ulClass && $depth ==  0) {
+                if ($ulClass && $depth == 0) {
                     $ulClass = ' class="' . $ulClass . '"';
                 } elseif ($page->getParent()) {
                     $ulClass = ' class="dropdown-menu"';
@@ -197,26 +198,31 @@ class Menu extends ZendMenu
             }
 
             // render li tag and page
-            $liClasses = array();
+            $liClasses = [];
             // Is page active?
             if ($isActive) {
                 $liClasses[] = 'active';
             }
+
             // Is page parent?
-            if ($page->hasChildren() && (!isset($maxDepth) || $depth < $maxDepth)) {
-                if (!isset($page->dropdown) || $page->dropdown == true) {
+            if ($page->hasChildren() && ( ! isset($maxDepth) || $depth < $maxDepth)) {
+                if ( ! isset($page->dropdown) || $page->dropdown == true) {
                     $liClasses[] = 'dropdown';
                     $page->isDropdown = true;
                 }
             }
+
             // Add CSS class from page to <li>
             if ($addClassToListItem && $page->getClass()) {
                 $liClasses[] = $page->getClass();
             }
             $liClass = empty($liClasses) ? '' : ' class="' . implode(' ', $liClasses) . '"';
 
-            $html .= $myIndent . '    <li' . $liClass . '>' . self::EOL
-                . $myIndent . '        ' . $this->htmlify($page, $escapeLabels, $addClassToListItem) . self::EOL;
+            $html .= $myIndent . '    <li' . $liClass . '>' . self::EOL . $myIndent . '        ' . $this->htmlify(
+                    $page,
+                    $escapeLabels,
+                    $addClassToListItem
+                ) . self::EOL;
 
             // store as previous depth for next iteration
             $prevDepth = $depth;
@@ -224,10 +230,9 @@ class Menu extends ZendMenu
 
         if ($html) {
             // done iterating container; close open ul/li tags
-            for ($i = $prevDepth+1; $i > 0; $i--) {
-                $myIndent = $indent . str_repeat('        ', $i-1);
-                $html .= $myIndent . '    </li>' . self::EOL
-                    . $myIndent . '</ul>' . self::EOL;
+            for ($i = $prevDepth + 1; $i > 0; $i--) {
+                $myIndent = $indent . str_repeat('        ', $i - 1);
+                $html .= $myIndent . '    </li>' . self::EOL . $myIndent . '</ul>' . self::EOL;
             }
             $html = rtrim($html, self::EOL);
         }
@@ -244,6 +249,7 @@ class Menu extends ZendMenu
      * @param  AbstractPage $page               page to generate HTML for
      * @param  bool         $escapeLabel        Whether or not to escape the label
      * @param  bool         $addClassToListItem Whether or not to add the page class to the list item
+     *
      * @return string
      */
     public function htmlify(AbstractPage $page, $escapeLabel = true, $addClassToListItem = false)
@@ -255,10 +261,10 @@ class Menu extends ZendMenu
         // translate label and title?
         if (null !== ($translator = $this->getTranslator())) {
             $textDomain = $this->getTranslatorTextDomain();
-            if (is_string($label) && !empty($label)) {
+            if (is_string($label) && ! empty($label)) {
                 $label = $translator->translate($label, $textDomain);
             }
-            if (is_string($title) && !empty($title)) {
+            if (is_string($title) && ! empty($title)) {
                 $title = $translator->translate($title, $textDomain);
             }
         }
@@ -266,13 +272,13 @@ class Menu extends ZendMenu
         // get attribs for element
         $element = 'a';
         $extended = '';
-        $attribs = array(
-            'id'     => $page->getId(),
-            'title'  => $title,
-            'href'   => '#',
-        );
+        $attribs = [
+            'id'    => $page->getId(),
+            'title' => $title,
+            'href'  => '#',
+        ];
 
-        $class = array();
+        $class = [];
         if ($addClassToListItem === false) {
             $class[] = $page->getClass();
         }

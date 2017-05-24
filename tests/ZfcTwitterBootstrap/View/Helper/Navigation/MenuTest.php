@@ -1,9 +1,11 @@
 <?php
+
 namespace ZfcTwitterBootstrapTest\View\Helper\Navigation;
 
+use PHPUnit\Framework\TestCase;
 use ZfcTwitterBootstrap\View\Helper\Navigation\Menu;
 
-class MenuTest extends \PHPUnit_Framework_TestCase
+class MenuTest extends TestCase
 {
     /**
      * @var Menu
@@ -19,42 +21,44 @@ class MenuTest extends \PHPUnit_Framework_TestCase
 
     public function testDropdownWithMaxDepth()
     {
-        $container = new \Zend\Navigation\Navigation(array(
-            array(
-                'label' => 'Page 1',
-                'id'    => 'p1',
-                'uri'   => 'p1',
-            ),
-            array(
-                'label' => 'Page 2',
-                'id'    => 'p2',
-                'uri'   => 'p2',
-                'pages' => array(
-                    array(
-                        'label' => 'Page 2.1',
-                        'id'    => 'p2-1',
-                        'uri'   => 'p2-1',
-                        'pages' => array(
-                            array(
-                                'label' => 'Page 2.1.1',
-                                'id'    => 'p2-1-1',
-                                'uri'   => 'p2-1-1',
-                            ),
-                            array(
-                                'label' => 'Page 2.1.2',
-                                'id'    => 'p2-1-2',
-                                'uri'   => 'p2-1-2',
-                            ),
-                        ),
-                    ),
-                    array(
-                        'label' => 'Page 2.2',
-                        'id'    => 'p2-2',
-                        'uri'   => 'p2-2',
-                    ),
-                ),
-            ),
-        ));
+        $container = new \Zend\Navigation\Navigation(
+            [
+                [
+                    'label' => 'Page 1',
+                    'id'    => 'p1',
+                    'uri'   => 'p1',
+                ],
+                [
+                    'label' => 'Page 2',
+                    'id'    => 'p2',
+                    'uri'   => 'p2',
+                    'pages' => [
+                        [
+                            'label' => 'Page 2.1',
+                            'id'    => 'p2-1',
+                            'uri'   => 'p2-1',
+                            'pages' => [
+                                [
+                                    'label' => 'Page 2.1.1',
+                                    'id'    => 'p2-1-1',
+                                    'uri'   => 'p2-1-1',
+                                ],
+                                [
+                                    'label' => 'Page 2.1.2',
+                                    'id'    => 'p2-1-2',
+                                    'uri'   => 'p2-1-2',
+                                ],
+                            ],
+                        ],
+                        [
+                            'label' => 'Page 2.2',
+                            'id'    => 'p2-2',
+                            'uri'   => 'p2-2',
+                        ],
+                    ],
+                ],
+            ]
+        );
         $expected = '<ul class="nav">
     <li>
         <a id="menu-p1" href="p1">Page 1</a>
@@ -80,44 +84,45 @@ class MenuTest extends \PHPUnit_Framework_TestCase
 
     public function testRenderDeepestMenu()
     {
-
-        $container = new \Zend\Navigation\Navigation(array(
-            array(
-                'label' => 'Page 1',
-                'id'    => 'p1',
-                'uri'   => 'p1',
-            ),
-            array(
-                'label' => 'Page 2',
-                'id'    => 'p2',
-                'uri'   => 'p2',
-                'pages' => array(
-                    array(
-                        'label' => 'Page 2.1',
-                        'id'    => 'p2-1',
-                        'uri'   => 'p2-1',
-                        'pages' => array(
-                            array(
-                                'label' => 'Page 2.1.1',
-                                'id'    => 'p2-1-1',
-                                'uri'   => 'p2-1-1',
-                                'active' => true,
-                            ),
-                            array(
-                                'label' => 'Page 2.1.2',
-                                'id'    => 'p2-1-2',
-                                'uri'   => 'p2-1-2',
-                            ),
-                        ),
-                    ),
-                    array(
-                        'label' => 'Page 2.2',
-                        'id'    => 'p2-2',
-                        'uri'   => 'p2-2',
-                    ),
-                ),
-            ),
-        ));
+        $container = new \Zend\Navigation\Navigation(
+            [
+                [
+                    'label' => 'Page 1',
+                    'id'    => 'p1',
+                    'uri'   => 'p1',
+                ],
+                [
+                    'label' => 'Page 2',
+                    'id'    => 'p2',
+                    'uri'   => 'p2',
+                    'pages' => [
+                        [
+                            'label' => 'Page 2.1',
+                            'id'    => 'p2-1',
+                            'uri'   => 'p2-1',
+                            'pages' => [
+                                [
+                                    'label'  => 'Page 2.1.1',
+                                    'id'     => 'p2-1-1',
+                                    'uri'    => 'p2-1-1',
+                                    'active' => true,
+                                ],
+                                [
+                                    'label' => 'Page 2.1.2',
+                                    'id'    => 'p2-1-2',
+                                    'uri'   => 'p2-1-2',
+                                ],
+                            ],
+                        ],
+                        [
+                            'label' => 'Page 2.2',
+                            'id'    => 'p2-2',
+                            'uri'   => 'p2-2',
+                        ],
+                    ],
+                ],
+            ]
+        );
         $expected = '<ul class="nav">
     <li class="active">
         <a id="menu-p2-1-1" href="p2-1-1">Page 2.1.1</a>
@@ -126,7 +131,6 @@ class MenuTest extends \PHPUnit_Framework_TestCase
         <a id="menu-p2-1-2" href="p2-1-2">Page 2.1.2</a>
     </li>
 </ul>';
-
 
         $this->helper->setOnlyActiveBranch(true);
         $this->helper->setRenderParents(false);
@@ -138,44 +142,45 @@ class MenuTest extends \PHPUnit_Framework_TestCase
 
     public function testNoDropdownWhenRenderingDeepestMenu()
     {
-
-        $container = new \Zend\Navigation\Navigation(array(
-            array(
-                'label' => 'Page 1',
-                'id'    => 'p1',
-                'uri'   => 'p1',
-            ),
-            array(
-                'label' => 'Page 2',
-                'id'    => 'p2',
-                'uri'   => 'p2',
-                'pages' => array(
-                    array(
-                        'label' => 'Page 2.1',
-                        'id'    => 'p2-1',
-                        'uri'   => 'p2-1',
-                        'pages' => array(
-                            array(
-                                'label' => 'Page 2.1.1',
-                                'id'    => 'p2-1-1',
-                                'uri'   => 'p2-1-1',
-                                'active' => true,
-                            ),
-                            array(
-                                'label' => 'Page 2.1.2',
-                                'id'    => 'p2-1-2',
-                                'uri'   => 'p2-1-2',
-                            ),
-                        ),
-                    ),
-                    array(
-                        'label' => 'Page 2.2',
-                        'id'    => 'p2-2',
-                        'uri'   => 'p2-2',
-                    ),
-                ),
-            ),
-        ));
+        $container = new \Zend\Navigation\Navigation(
+            [
+                [
+                    'label' => 'Page 1',
+                    'id'    => 'p1',
+                    'uri'   => 'p1',
+                ],
+                [
+                    'label' => 'Page 2',
+                    'id'    => 'p2',
+                    'uri'   => 'p2',
+                    'pages' => [
+                        [
+                            'label' => 'Page 2.1',
+                            'id'    => 'p2-1',
+                            'uri'   => 'p2-1',
+                            'pages' => [
+                                [
+                                    'label'  => 'Page 2.1.1',
+                                    'id'     => 'p2-1-1',
+                                    'uri'    => 'p2-1-1',
+                                    'active' => true,
+                                ],
+                                [
+                                    'label' => 'Page 2.1.2',
+                                    'id'    => 'p2-1-2',
+                                    'uri'   => 'p2-1-2',
+                                ],
+                            ],
+                        ],
+                        [
+                            'label' => 'Page 2.2',
+                            'id'    => 'p2-2',
+                            'uri'   => 'p2-2',
+                        ],
+                    ],
+                ],
+            ]
+        );
         $expected = '<ul class="nav">
     <li class="active">
         <a id="menu-p2-1" href="p2-1">Page 2.1</a>

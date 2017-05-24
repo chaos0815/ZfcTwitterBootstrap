@@ -5,9 +5,10 @@
 
 namespace ZfcTwitterBootstrapTest\View\Helper;
 
+use PHPUnit\Framework\TestCase;
 use ZfcTwitterBootstrap\View\Helper\Label;
 
-class LabelTest extends \PHPUnit_Framework_TestCase
+class LabelTest extends TestCase
 {
     protected $helper;
 

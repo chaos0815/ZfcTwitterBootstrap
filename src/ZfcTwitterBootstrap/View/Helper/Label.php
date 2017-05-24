@@ -12,11 +12,10 @@ use Zend\Form\View\Helper\AbstractHelper;
  */
 class Label extends AbstractHelper
 {
-
     /**
      * @var string
      */
-     protected $format = <<<FORMAT
+    protected $format = <<<'FORMAT'
 <span class="label %s">%s</span>
 FORMAT;
 
@@ -24,6 +23,7 @@ FORMAT;
      * Display an Informational Label
      *
      * @param  string $label
+     *
      * @return string
      */
     public function info($label)
@@ -35,6 +35,7 @@ FORMAT;
      * Display an Important Label
      *
      * @param  string $label
+     *
      * @return string
      */
     public function important($label)
@@ -46,6 +47,7 @@ FORMAT;
      * Display an Inverse Label
      *
      * @param  string $label
+     *
      * @return string
      */
     public function inverse($label)
@@ -57,6 +59,7 @@ FORMAT;
      * Display a Sucess Label
      *
      * @param  string $label
+     *
      * @return string
      */
     public function success($label)
@@ -68,6 +71,7 @@ FORMAT;
      * Display a Warning Label
      *
      * @param  string $label
+     *
      * @return string
      */
     public function warning($label)
@@ -80,6 +84,7 @@ FORMAT;
      *
      * @param  string $label
      * @param  string $class
+     *
      * @return string
      */
     public function render($label, $class = '')
@@ -92,8 +97,9 @@ FORMAT;
     /**
      * Invoke Label
      *
-     * @param  string      $label
-     * @param  string      $class
+     * @param  string $label
+     * @param  string $class
+     *
      * @return string|self
      */
     public function __invoke($label = null, $class = '')

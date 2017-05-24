@@ -5,9 +5,10 @@
 
 namespace ZfcTwitterBootstrapTest\View\Helper;
 
+use PHPUnit\Framework\TestCase;
 use ZfcTwitterBootstrap\View\Helper\Badge;
 
-class BadgeTest extends \PHPUnit_Framework_TestCase
+class BadgeTest extends TestCase
 {
     protected $helper;
 

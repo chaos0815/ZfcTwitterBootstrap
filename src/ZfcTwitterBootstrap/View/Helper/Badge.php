@@ -12,11 +12,10 @@ use Zend\Form\View\Helper\AbstractHelper;
  */
 class Badge extends AbstractHelper
 {
-
     /**
      * @var string
      */
-     protected $format = <<<FORMAT
+    protected $format = <<<'FORMAT'
 <span class="badge %s">%s</span>
 FORMAT;
 
@@ -24,6 +23,7 @@ FORMAT;
      * Display an Informational Badge
      *
      * @param  string $badge
+     *
      * @return string
      */
     public function info($badge)
@@ -35,6 +35,7 @@ FORMAT;
      * Display an Important Badge
      *
      * @param  string $badge
+     *
      * @return string
      */
     public function important($badge)
@@ -46,6 +47,7 @@ FORMAT;
      * Display an Inverse Badge
      *
      * @param  string $badge
+     *
      * @return string
      */
     public function inverse($badge)
@@ -57,6 +59,7 @@ FORMAT;
      * Display a Sucess Badge
      *
      * @param  string $badge
+     *
      * @return string
      */
     public function success($badge)
@@ -68,6 +71,7 @@ FORMAT;
      * Display a Warning Badge
      *
      * @param  string $badge
+     *
      * @return string
      */
     public function warning($badge)
@@ -80,6 +84,7 @@ FORMAT;
      *
      * @param  string $badge
      * @param  string $class
+     *
      * @return string
      */
     public function render($badge, $class = '')
@@ -92,8 +97,9 @@ FORMAT;
     /**
      * Invoke Badge
      *
-     * @param  string      $badge
-     * @param  string      $class
+     * @param  string $badge
+     * @param  string $class
+     *
      * @return string|self
      */
     public function __invoke($badge = null, $class = '')

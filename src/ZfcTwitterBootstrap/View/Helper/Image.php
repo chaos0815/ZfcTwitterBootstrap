@@ -21,6 +21,7 @@ class Image extends AbstractHelper
      * Display an rounded image
      *
      * @param  string $src
+     *
      * @return string
      */
     public function rounded($src)
@@ -32,6 +33,7 @@ class Image extends AbstractHelper
      * Display an circle image
      *
      * @param  string $src
+     *
      * @return string
      */
     public function circle($src)
@@ -43,6 +45,7 @@ class Image extends AbstractHelper
      * Display an polariod image
      *
      * @param  string $src
+     *
      * @return string
      */
     public function polaroid($src)
@@ -55,6 +58,7 @@ class Image extends AbstractHelper
      *
      * @param  string $src
      * @param  string $class
+     *
      * @return string
      */
     public function render($src, $class = '')
@@ -68,8 +72,9 @@ class Image extends AbstractHelper
     /**
      * Invoke Image
      *
-     * @param  string      $src
-     * @param  string      $class
+     * @param  string $src
+     * @param  string $class
+     *
      * @return string|self
      */
     public function __invoke($src = '', $class = '')

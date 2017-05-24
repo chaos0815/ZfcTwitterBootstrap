@@ -5,9 +5,10 @@
 
 namespace ZfcTwitterBootstrapTest\View\Helper;
 
+use PHPUnit\Framework\TestCase;
 use ZfcTwitterBootstrap\View\Helper\Well;
 
-class WellTest extends \PHPUnit_Framework_TestCase
+class WellTest extends TestCase
 {
     protected $helper;
 

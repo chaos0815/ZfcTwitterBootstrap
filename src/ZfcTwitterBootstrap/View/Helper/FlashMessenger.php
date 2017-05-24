@@ -5,7 +5,7 @@
 
 namespace ZfcTwitterBootstrap\View\Helper;
 
-use Zend\Mvc\Controller\Plugin\FlashMessenger as PluginFlashMessenger;
+use Zend\Mvc\Plugin\FlashMessenger\FlashMessenger as PluginFlashMessenger;
 use Zend\View\Helper\AbstractHelper;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -36,46 +36,55 @@ class FlashMessenger extends AbstractHelper implements ServiceLocatorAwareInterf
     protected $pluginFlashMessenger;
 
     private $translator;
-    
+
     /**
      * @var array Default attributes for the open format tag
      */
-    protected $classMessages = array(
+    protected $classMessages = [
         PluginFlashMessenger::NAMESPACE_INFO    => 'info',
         PluginFlashMessenger::NAMESPACE_ERROR   => 'error',
         PluginFlashMessenger::NAMESPACE_SUCCESS => 'success',
         PluginFlashMessenger::NAMESPACE_DEFAULT => 'warning',
-    );
+    ];
 
     /**
      * @var array An array of allowed title tags
      */
-    protected $allowedTags = array(
-        'h1','h2','h3','h4','h5','h6','b','strong'
-    );
+    protected $allowedTags = [
+        'h1',
+        'h2',
+        'h3',
+        'h4',
+        'h5',
+        'h6',
+        'b',
+        'strong',
+    ];
 
     /**
      * Set the service locator.
      *
      * @param ServiceLocatorInterface $serviceLocator
-     *            @return CustomHelper
+     *
+     * @return CustomHelper
      */
-    public function setServiceLocator (ServiceLocatorInterface $serviceLocator)
+    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
     {
         $this->serviceLocator = $serviceLocator;
+
         return $this;
     }
-    
+
     /**
      * Get the service locator.
      *
      * @return \Zend\View\HelperPluginManager
      */
-    public function getServiceLocator ()
+    public function getServiceLocator()
     {
         return $this->serviceLocator;
     }
-    
+
     /**
      * Returns the flash messenges as a string
      *
@@ -95,19 +104,27 @@ class FlashMessenger extends AbstractHelper implements ServiceLocatorAwareInterf
      *
      * @param  string $method
      * @param  array  $argv
+     *
      * @return mixed
      */
     public function __call($method, $argv)
     {
         $flashMessenger = $this->getPluginFlashMessenger();
 
-        return call_user_func_array(array($flashMessenger, $method), $argv);
+        return call_user_func_array(
+            [
+                $flashMessenger,
+                $method,
+            ],
+            $argv
+        );
     }
 
     /**
      * Render Messages
      *
-     * @param  array  $namespace
+     * @param  array $namespace
+     *
      * @return string
      */
     public function render($namespace = null)
@@ -130,6 +147,7 @@ class FlashMessenger extends AbstractHelper implements ServiceLocatorAwareInterf
      * Gets messages from flash messenger plugin namespace
      *
      * @param  string $namespace
+     *
      * @return string
      */
     protected function fetchMessagesFromNamespace($namespace)
@@ -152,41 +170,39 @@ class FlashMessenger extends AbstractHelper implements ServiceLocatorAwareInterf
      *
      * @param  string       $namespace
      * @param  array|string $messages
+     *
      * @return string
      */
     protected function buildMessage($namespace, $messages)
     {
         $escapeHtml = $this->getEscapeHtmlHelper();
-        $messagesToPrint = array();
+        $messagesToPrint = [];
 
         foreach ($messages as $message) {
-
             if (is_array($message)) {
-
                 $isBlock = (isset($message['isBlock'])) ? true : false;
 
                 if (isset($message['title'])) {
                     $title = $escapeHtml($message['title']);
                 }
 
-                if (isset($message['titleTag']) &&
-                in_array($message['titleTag'], $this->allowedTags)) {
+                if (isset($message['titleTag']) && in_array($message['titleTag'], $this->allowedTags)) {
                     $titleTag = $escapeHtml($message['titleTag']);
                 } else {
                     $titleTag = ($isBlock) ? 'h4' : 'strong';
                 }
 
                 $messagesToPrint[] = $this->getAlert(
-                        $namespace,
-                        $this->translate($escapeHtml($message['message'])),
-                        $title,
-                        $titleTag,
-                        $isBlock
+                    $namespace,
+                    $this->translate($escapeHtml($message['message'])),
+                    $title,
+                    $titleTag,
+                    $isBlock
                 );
             } else {
                 $messagesToPrint[] = $this->getAlert(
-                        $namespace,
-                        $this->translate($escapeHtml($message))
+                    $namespace,
+                    $this->translate($escapeHtml($message))
                 );
             }
         }
@@ -201,6 +217,7 @@ class FlashMessenger extends AbstractHelper implements ServiceLocatorAwareInterf
      * Get the alert string
      *
      * @param  string $namespace
+     *
      * @return string $alert
      */
     protected function getAlert($namespace, $message, $title = null, $titleTag = 'h4', $isBlock = false)
@@ -226,7 +243,7 @@ class FlashMessenger extends AbstractHelper implements ServiceLocatorAwareInterf
             return $this->alertHelper;
         }
 
-        $this->alertHelper = $this->view->plugin('ztbalert');
+        $this->alertHelper = $this->view->plugin('ztbAlert');
 
         return $this->alertHelper;
     }
@@ -242,7 +259,7 @@ class FlashMessenger extends AbstractHelper implements ServiceLocatorAwareInterf
             return $this->escapeHtmlHelper;
         }
 
-        $this->escapeHtmlHelper = $this->view->plugin('escapehtml');
+        $this->escapeHtmlHelper = $this->view->plugin('escapeHtml');
 
         return $this->escapeHtmlHelper;
     }
@@ -262,26 +279,28 @@ class FlashMessenger extends AbstractHelper implements ServiceLocatorAwareInterf
 
         return $this->pluginFlashMessenger;
     }
-    
+
     /**
-     *
      * @param string $message
+     *
      * @return string
      */
-    public function translate($message){
-        if($this->translator === false){
+    public function translate($message)
+    {
+        if ($this->translator === false) {
             return $message;
         }
-    
-        if($this->translator === null){
-            if($this->getServiceLocator()->getServiceLocator()->has('translator')){
+
+        if ($this->translator === null) {
+            if ($this->getServiceLocator()->getServiceLocator()->has('translator')) {
                 $this->translator = $this->getServiceLocator()->getServiceLocator()->get('translator');
-            } else{
+            } else {
                 $this->translator = false;
+
                 return $message;
             }
         }
-    
+
         return $this->translator->translate($message);
     }
 }

@@ -12,14 +12,14 @@ use Zend\Form\View\Helper\AbstractHelper;
  */
 class CloseIcon extends AbstractHelper
 {
-
     const TYPE_BUTTON = 'button';
-    const TYPE_ANCOR  = 'a';
+    const TYPE_ANCOR = 'a';
 
     /**
      * Invoke CloseIcon
      *
      * @param  string $type
+     *
      * @return string
      */
     public function __invoke($type = self::TYPE_BUTTON)
