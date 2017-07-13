@@ -5,16 +5,18 @@
 
 namespace ZfcTwitterBootstrap\View\Helper;
 
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Zend\Mvc\Plugin\FlashMessenger\FlashMessenger as PluginFlashMessenger;
 use Zend\View\Helper\AbstractHelper;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Helper to proxy the plugin flash messenger
  */
-class FlashMessenger extends AbstractHelper implements ServiceLocatorAwareInterface
+class FlashMessenger extends AbstractHelper implements ContainerAwareInterface
 {
+    protected $serviceLocator;
+
     /**
      * @var string
      */
@@ -35,7 +37,7 @@ class FlashMessenger extends AbstractHelper implements ServiceLocatorAwareInterf
      */
     protected $pluginFlashMessenger;
 
-    private $translator;
+    private $translator = false;
 
     /**
      * @var array Default attributes for the open format tag
@@ -60,30 +62,6 @@ class FlashMessenger extends AbstractHelper implements ServiceLocatorAwareInterf
         'b',
         'strong',
     ];
-
-    /**
-     * Set the service locator.
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     *
-     * @return CustomHelper
-     */
-    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
-    {
-        $this->serviceLocator = $serviceLocator;
-
-        return $this;
-    }
-
-    /**
-     * Get the service locator.
-     *
-     * @return \Zend\View\HelperPluginManager
-     */
-    public function getServiceLocator()
-    {
-        return $this->serviceLocator;
-    }
 
     /**
      * Returns the flash messenges as a string
@@ -152,12 +130,16 @@ class FlashMessenger extends AbstractHelper implements ServiceLocatorAwareInterf
      */
     protected function fetchMessagesFromNamespace($namespace)
     {
-        $this->setNamespace($namespace);
 
-        if ($this->hasMessages()) {
-            $messages = $this->getMessagesFromNamespace($namespace);
+        /** @var \Zend\Mvc\Plugin\FlashMessenger\FlashMessenger $fm */
+        $fm = $this->getPluginFlashMessenger();
+
+        $fm->setNamespace($namespace);
+
+        if ($fm->hasMessages()) {
+            $messages = $fm->getMessagesFromNamespace($namespace);
             // reset namespace
-            $this->setNamespace();
+            $fm->setNamespace();
 
             return $this->buildMessage($namespace, $messages);
         }
@@ -267,7 +249,7 @@ class FlashMessenger extends AbstractHelper implements ServiceLocatorAwareInterf
     /**
      * Retrieve the flash messenger plugin
      *
-     * @return \Zend\Mvc\Controller\Plugin\FlashMessenger
+     * @return \Zend\Mvc\Plugin\FlashMessenger\FlashMessenger
      */
     public function getPluginFlashMessenger()
     {
@@ -275,7 +257,7 @@ class FlashMessenger extends AbstractHelper implements ServiceLocatorAwareInterf
             return $this->pluginFlashMessenger;
         }
 
-        $this->pluginFlashMessenger = new PluginFlashMessenger();
+        $this->pluginFlashMessenger = new \Zend\Mvc\Plugin\FlashMessenger\FlashMessenger();
 
         return $this->pluginFlashMessenger;
     }
@@ -302,5 +284,27 @@ class FlashMessenger extends AbstractHelper implements ServiceLocatorAwareInterf
         }
 
         return $this->translator->translate($message);
+    }
+
+    /**
+     * Sets the container.
+     *
+     * @param ContainerInterface|null $container A ContainerInterface instance or null
+     */
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->serviceLocator = $container;
+
+        return $this;
+    }
+
+    /**
+     * Get the service locator.
+     *
+     * @return \Zend\View\HelperPluginManager
+     */
+    public function getServiceLocator()
+    {
+        return $this->serviceLocator;
     }
 }
