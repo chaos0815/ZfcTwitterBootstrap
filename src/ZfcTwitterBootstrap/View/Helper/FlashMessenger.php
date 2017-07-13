@@ -5,15 +5,13 @@
 
 namespace ZfcTwitterBootstrap\View\Helper;
 
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Zend\Mvc\Plugin\FlashMessenger\FlashMessenger as PluginFlashMessenger;
 use Zend\View\Helper\AbstractHelper;
 
 /**
  * Helper to proxy the plugin flash messenger
  */
-class FlashMessenger extends AbstractHelper implements ContainerAwareInterface
+class FlashMessenger extends AbstractHelper
 {
     protected $serviceLocator;
 
@@ -33,7 +31,7 @@ class FlashMessenger extends AbstractHelper implements ContainerAwareInterface
     protected $escapeHtmlHelper;
 
     /**
-     * @var \Zend\Mvc\Controller\Plugin\FlashMessenger
+     * @var \Zend\Mvc\Plugin\FlashMessenger\FlashMessenger
      */
     protected $pluginFlashMessenger;
 
@@ -269,42 +267,6 @@ class FlashMessenger extends AbstractHelper implements ContainerAwareInterface
      */
     public function translate($message)
     {
-        if ($this->translator === false) {
-            return $message;
-        }
-
-        if ($this->translator === null) {
-            if ($this->getServiceLocator()->getServiceLocator()->has('translator')) {
-                $this->translator = $this->getServiceLocator()->getServiceLocator()->get('translator');
-            } else {
-                $this->translator = false;
-
-                return $message;
-            }
-        }
-
-        return $this->translator->translate($message);
-    }
-
-    /**
-     * Sets the container.
-     *
-     * @param ContainerInterface|null $container A ContainerInterface instance or null
-     */
-    public function setContainer(ContainerInterface $container = null)
-    {
-        $this->serviceLocator = $container;
-
-        return $this;
-    }
-
-    /**
-     * Get the service locator.
-     *
-     * @return \Zend\View\HelperPluginManager
-     */
-    public function getServiceLocator()
-    {
-        return $this->serviceLocator;
+        return $message;
     }
 }
