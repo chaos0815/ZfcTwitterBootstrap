@@ -37,5 +37,8 @@
         "classmap": [
             "./"
         ]
+    },
+    "replace": {
+    	"mwillbanks/zfc-twitter-bootstrap":"*"
     }
 }
