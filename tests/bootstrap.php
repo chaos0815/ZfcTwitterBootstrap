@@ -1,7 +1,7 @@
 <?php
 
-use Zend\Loader\AutoloaderFactory;
-use Zend\Loader\StandardAutoloader;
+use Laminas\Loader\AutoloaderFactory;
+use Laminas\Loader\StandardAutoloader;
 
 $additionalNamespaces = $additionalModulePaths = $moduleDependencies = null;
 
@@ -20,7 +20,7 @@ require($rootPath . '/vendor/autoload.php');
 // setup autoloader
 AutoloaderFactory::factory(
     array(
-        'Zend\Loader\StandardAutoloader' => array(
+        'Laminas\Loader\StandardAutoloader' => array(
             StandardAutoloader::AUTOREGISTER_ZF => true,
             StandardAutoloader::ACT_AS_FALLBACK => false,
             StandardAutoloader::LOAD_NS => $additionalNamespaces,
@@ -50,32 +50,32 @@ if (isset($moduleDependencies)) {
 }
 
 
-$listenerOptions = new Zend\ModuleManager\Listener\ListenerOptions(array('module_paths' => $modulePaths));
-$defaultListeners = new Zend\ModuleManager\Listener\DefaultListenerAggregate($listenerOptions);
-$sharedEvents = new Zend\EventManager\SharedEventManager();
-$moduleManager = new \Zend\ModuleManager\ModuleManager($modules);
-$moduleManager->getEventManager()->setSharedManager($sharedEvents);
-$moduleManager->getEventManager()->attachAggregate($defaultListeners);
+$listenerOptions = new Laminas\ModuleManager\Listener\ListenerOptions(array('module_paths' => $modulePaths));
+$defaultListeners = new Laminas\ModuleManager\Listener\DefaultListenerAggregate($listenerOptions);
+$sharedEvents = new Laminas\EventManager\SharedEventManager();
+$eventManager = new \Laminas\EventManager\EventManager($sharedEvents);
+$moduleManager = new \Laminas\ModuleManager\ModuleManager($modules, $eventManager);
+$defaultListeners->attach($eventManager);
 $moduleManager->loadModules();
 
 if (method_exists($moduleTestCaseClassname, 'setLocator')) {
     $config = $defaultListeners->getConfigListener()->getMergedConfig();
 
-    $di = new \Zend\Di\Di;
-    $di->instanceManager()->addTypePreference('Zend\Di\LocatorInterface', $di);
+    $di = new \Laminas\Di\Di;
+    $di->instanceManager()->addTypePreference('Laminas\Di\LocatorInterface', $di);
 
     if (isset($config['di'])) {
-        $diConfig = new \Zend\Di\Config($config['di']);
+        $diConfig = new \Laminas\Di\Config($config['di']);
         $diConfig->configure($di);
     }
 
-    $routerDiConfig = new \Zend\Di\Config(
+    $routerDiConfig = new \Laminas\Di\Config(
         array(
             'definition' => array(
                 'class' => array(
-                    'Zend\Mvc\Router\RouteStackInterface' => array(
+                    'Laminas\Mvc\Router\RouteStackInterface' => array(
                         'instantiator' => array(
-                            'Zend\Mvc\Router\Http\TreeRouteStack',
+                            'Laminas\Mvc\Router\Http\TreeRouteStack',
                             'factory'
                         ),
                     ),
@@ -89,5 +89,5 @@ if (method_exists($moduleTestCaseClassname, 'setLocator')) {
 }
 
 // When this is in global scope, PHPUnit catches exception:
-// Exception: Zend\Stdlib\PriorityQueue::serialize() must return a string or NULL
+// Exception: Laminas\Stdlib\PriorityQueue::serialize() must return a string or NULL
 unset($moduleManager, $sharedEvents);

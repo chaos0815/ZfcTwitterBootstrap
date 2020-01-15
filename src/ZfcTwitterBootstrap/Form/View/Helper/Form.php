@@ -6,11 +6,11 @@
 namespace ZfcTwitterBootstrap\Form\View\Helper;
 
 use Traversable;
-use Zend\Form\ElementInterface;
-use Zend\Form\Form as ZendForm;
-use Zend\Form\Fieldset;
-use Zend\Form\View\Helper\Form as FormHelper;
-use Zend\View\Helper\AbstractHelper;
+use Laminas\Form\ElementInterface;
+use Laminas\Form\Form as LaminasForm;
+use Laminas\Form\Fieldset;
+use Laminas\Form\View\Helper\Form as FormHelper;
+use Laminas\View\Helper\AbstractHelper;
 
 /**
  * Form
@@ -18,7 +18,7 @@ use Zend\View\Helper\AbstractHelper;
 class Form extends AbstractHelper
 {
     /**
-     * @var \Zend\View\Helper\Form
+     * @var \Laminas\View\Helper\Form
      */
     protected $formHelper;
 
@@ -57,7 +57,7 @@ class Form extends AbstractHelper
     /**
      * Set Form Helper
      *
-     * @param  \Zend\Form\View\Helper\Form $form
+     * @param  \Laminas\Form\View\Helper\Form $form
      *
      * @return self
      */
@@ -72,7 +72,7 @@ class Form extends AbstractHelper
     /**
      * Get Form Helper
      *
-     * @return \Zend\Form\View\Helper\Form
+     * @return \Laminas\Form\View\Helper\Form
      */
     public function getFormHelper()
     {
@@ -86,11 +86,11 @@ class Form extends AbstractHelper
     /**
      * Display a Form
      *
-     * @param  \Zend\Form\Form $form
+     * @param  \Laminas\Form\Form $form
      *
      * @return string
      */
-    public function __invoke(ZendForm $form)
+    public function __invoke(LaminasForm $form)
     {
         $form->prepare();
         $html = $this->getFormHelper()->openTag($form);
@@ -126,7 +126,7 @@ class Form extends AbstractHelper
     /**
      * Render a Fieldset
      *
-     * @param  \Zend\Form\Fieldset $fieldset
+     * @param  \Laminas\Form\Fieldset $fieldset
      *
      * @return string
      */

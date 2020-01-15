@@ -5,8 +5,8 @@
 
 namespace ZfcTwitterBootstrap\View\Helper;
 
-use Zend\Mvc\Plugin\FlashMessenger\FlashMessenger as PluginFlashMessenger;
-use Zend\View\Helper\AbstractHelper;
+use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger as PluginFlashMessenger;
+use Laminas\View\Helper\AbstractHelper;
 
 /**
  * Helper to proxy the plugin flash messenger
@@ -26,12 +26,12 @@ class FlashMessenger extends AbstractHelper
     protected $alertHelper;
 
     /**
-     * @var \Zend\View\Helper\EscapeHtml
+     * @var \Laminas\View\Helper\EscapeHtml
      */
     protected $escapeHtmlHelper;
 
     /**
-     * @var \Zend\Mvc\Plugin\FlashMessenger\FlashMessenger
+     * @var \Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger
      */
     protected $pluginFlashMessenger;
 
@@ -129,7 +129,7 @@ class FlashMessenger extends AbstractHelper
     protected function fetchMessagesFromNamespace($namespace)
     {
 
-        /** @var \Zend\Mvc\Plugin\FlashMessenger\FlashMessenger $fm */
+        /** @var \Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger $fm */
         $fm = $this->getPluginFlashMessenger();
 
         $fm->setNamespace($namespace);
@@ -231,7 +231,7 @@ class FlashMessenger extends AbstractHelper
     /**
      * Retrieve the escapeHtml helper
      *
-     * @return \Zend\View\Helper\EscapeHtml
+     * @return \Laminas\View\Helper\EscapeHtml
      */
     protected function getEscapeHtmlHelper()
     {
@@ -247,7 +247,7 @@ class FlashMessenger extends AbstractHelper
     /**
      * Retrieve the flash messenger plugin
      *
-     * @return \Zend\Mvc\Plugin\FlashMessenger\FlashMessenger
+     * @return \Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger
      */
     public function getPluginFlashMessenger()
     {
@@ -255,7 +255,7 @@ class FlashMessenger extends AbstractHelper
             return $this->pluginFlashMessenger;
         }
 
-        $this->pluginFlashMessenger = new \Zend\Mvc\Plugin\FlashMessenger\FlashMessenger();
+        $this->pluginFlashMessenger = new \Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger();
 
         return $this->pluginFlashMessenger;
     }

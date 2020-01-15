@@ -5,8 +5,8 @@
 
 namespace ZfcTwitterBootstrap\View\Helper\Navigation;
 
-use Zend\Navigation\Page\AbstractPage;
-use Zend\View\Helper\Navigation\Breadcrumbs as ZendBreadcrumbs;
+use Laminas\Navigation\Page\AbstractPage;
+use Laminas\View\Helper\Navigation\Breadcrumbs as ZendBreadcrumbs;
 
 /**
  * Helper for printing breadcrumbs

@@ -5,8 +5,8 @@
 
 namespace ZfcTwitterBootstrap;
 
-use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
-use Zend\Form\View\Helper\FormElementErrors;
+use Laminas\ModuleManager\Feature\AutoloaderProviderInterface;
+use Laminas\Form\View\Helper\FormElementErrors;
 
 /**
  * Module Setup
@@ -31,10 +31,10 @@ class Module implements AutoloaderProviderInterface
     public function getAutoloaderConfig()
     {
         return array(
-            'Zend\Loader\ClassMapAutoloader' => array(
+            'Laminas\Loader\ClassMapAutoloader' => array(
                 __DIR__ . '/autoload_classmap.php',
             ),
-            'Zend\Loader\StandardAutoloader' => array(
+            'Laminas\Loader\StandardAutoloader' => array(
                 'namespaces' => array(
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
                 ),

@@ -5,8 +5,8 @@
 
 namespace ZfcTwitterBootstrap\Form\View\Helper;
 
-use Zend\Form\ElementInterface;
-use Zend\Form\View\Helper\AbstractHelper;
+use Laminas\Form\ElementInterface;
+use Laminas\Form\View\Helper\AbstractHelper;
 
 /**
  * Form Description
@@ -74,7 +74,7 @@ class FormDescription extends AbstractHelper
     /**
      * Render
      *
-     * @param  \Zend\Form\ElementInterface $element
+     * @param  \Laminas\Form\ElementInterface $element
      * @param  string                      $blockWrapper
      * @param  string                      $inlineWrapper
      *
@@ -99,7 +99,7 @@ class FormDescription extends AbstractHelper
     /**
      * Magical Invoke Method
      *
-     * @param  \Zend\Form\ElementInterface $elemnet
+     * @param  \Laminas\Form\ElementInterface $elemnet
      * @param  string                      $blockWrapper
      * @param  string                      $invokeWrapper
      *

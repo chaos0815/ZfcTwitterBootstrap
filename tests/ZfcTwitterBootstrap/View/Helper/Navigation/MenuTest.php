@@ -12,16 +12,16 @@ class MenuTest extends TestCase
      */
     protected $helper;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->helper = new Menu();
-        $this->helper->setView(new \Zend\View\Renderer\PhpRenderer());
+        $this->helper->setView(new \Laminas\View\Renderer\PhpRenderer());
         $this->helper->getView()->plugin('basePath')->setBasePath('/');
     }
 
     public function testDropdownWithMaxDepth()
     {
-        $container = new \Zend\Navigation\Navigation(
+        $container = new \Laminas\Navigation\Navigation(
             [
                 [
                     'label' => 'Page 1',
@@ -84,7 +84,7 @@ class MenuTest extends TestCase
 
     public function testRenderDeepestMenu()
     {
-        $container = new \Zend\Navigation\Navigation(
+        $container = new \Laminas\Navigation\Navigation(
             [
                 [
                     'label' => 'Page 1',
@@ -142,7 +142,7 @@ class MenuTest extends TestCase
 
     public function testNoDropdownWhenRenderingDeepestMenu()
     {
-        $container = new \Zend\Navigation\Navigation(
+        $container = new \Laminas\Navigation\Navigation(
             [
                 [
                     'label' => 'Page 1',

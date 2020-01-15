@@ -5,10 +5,10 @@
 
 namespace ZfcTwitterBootstrap\View\Helper;
 
-use Zend\View\Helper\AbstractHelper;
-use Zend\Filter\FilterChain;
-use Zend\Filter\Word\CamelCaseToDash;
-use Zend\Filter\StringToLower;
+use Laminas\View\Helper\AbstractHelper;
+use Laminas\Filter\FilterChain;
+use Laminas\Filter\Word\CamelCaseToDash;
+use Laminas\Filter\StringToLower;
 use InvalidArgumentException;
 
 /**

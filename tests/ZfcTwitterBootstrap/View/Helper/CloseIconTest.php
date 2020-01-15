@@ -12,7 +12,7 @@ class CloseIconTest extends TestCase
 {
     protected $helper;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->helper = new CloseIcon();
     }

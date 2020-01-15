@@ -12,13 +12,13 @@ class BreadcrumbTest extends TestCase
      */
     protected $helper;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->helper = new Breadcrumbs();
-        $this->helper->setView(new \Zend\View\Renderer\PhpRenderer());
+        $this->helper->setView(new \Laminas\View\Renderer\PhpRenderer());
         $this->helper->getView()->plugin('basePath')->setBasePath('/');
 
-        $this->container = new \Zend\Navigation\Navigation(
+        $this->container = new \Laminas\Navigation\Navigation(
             [
                 [
                     'label' => 'Page 1',

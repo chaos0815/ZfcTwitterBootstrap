@@ -12,16 +12,16 @@ class NavigationTest extends TestCase
 {
     protected $helper;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->helper = new Navigation();
-        $this->helper->setView(new \Zend\View\Renderer\PhpRenderer());
+        $this->helper->setView(new \Laminas\View\Renderer\PhpRenderer());
         $this->helper->getView()->plugin('basePath')->setBasePath('/');
     }
 
     public function testSimpleRender()
     {
-        $container = new \Zend\Navigation\Navigation(
+        $container = new \Laminas\Navigation\Navigation(
             [
                 [
                     'label' => 'Page 1',
@@ -50,7 +50,7 @@ class NavigationTest extends TestCase
 
     public function testDropdownRender()
     {
-        $container = new \Zend\Navigation\Navigation(
+        $container = new \Laminas\Navigation\Navigation(
             [
                 [
                     'label' => 'Page 1',

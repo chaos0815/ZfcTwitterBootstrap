@@ -3,7 +3,9 @@
     "description": "A module that assists in implementing Twitter Bootstrap for ZF2/3",
     "type": "library",
     "keywords": [
-        "zf2", "twBootstrap", "Twitter Bootstrap"
+        "zf2",
+        "twBootstrap",
+        "Twitter Bootstrap"
     ],
     "homepage": "https://github.com/mwillbanks/ZfcTwitterBootstrap",
     "authors": [
@@ -12,23 +14,25 @@
             "email": "mike@digitalstruct.com",
             "homepage": "http://blog.digitalstruct.com/"
         },
-	{
+        {
             "name": "Bart Riepe",
             "email": "aeolun@gmail.com",
             "homepage": "https://serial-experiments.com"
         }
     ],
     "require": {
-        "php": ">=5.3.3",
-        "zendframework/zend-filter": "2.* || 3.*",
-        "zendframework/zend-form": "2.* || 3.*",
-        "zendframework/zend-navigation": "2.* || 3.*",
-        "zendframework/zend-view": "2.* || 3.*",
-        "zendframework/zend-mvc-plugin-flashmessenger": "*"
+        "php": "^7.2",
+        "laminas/laminas-filter": "2.* || 3.*",
+        "laminas/laminas-form": "2.* || 3.*",
+        "laminas/laminas-navigation": "2.* || 3.*",
+        "laminas/laminas-view": "2.* || 3.*",
+        "laminas/laminas-mvc-plugin-flashmessenger": "*",
+        "laminas/laminas-dependency-plugin": "^1.0",
+        "laminas/laminas-i18n": "2.* || 3.*"
     },
     "require-dev": {
-        "zendframework/zendframework": "2.* || 3.*",
-        "phpunit/phpunit": ">=4.5"
+        "laminas/laminas-mvc-skeleton": "dev-master",
+        "phpunit/phpunit": "^8.5"
     },
     "autoload": {
         "psr-0": {
@@ -39,6 +43,6 @@
         ]
     },
     "replace": {
-    	"mwillbanks/zfc-twitter-bootstrap":"*"
+        "mwillbanks/zfc-twitter-bootstrap": "*"
     }
 }

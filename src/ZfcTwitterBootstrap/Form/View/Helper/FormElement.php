@@ -5,34 +5,34 @@
 
 namespace ZfcTwitterBootstrap\Form\View\Helper;
 
-use Zend\Form\ElementInterface;
-use Zend\Form\View\Helper\FormElement as ZendFormElement;
-use Zend\Form\View\Helper\FormLabel;
-use Zend\Form\View\Helper\FormElementErrors;
-use Zend\View\Helper\EscapeHtml;
+use Laminas\Form\ElementInterface;
+use Laminas\Form\View\Helper\FormElement as LaminasFormElement;
+use Laminas\Form\View\Helper\FormLabel;
+use Laminas\Form\View\Helper\FormElementErrors;
+use Laminas\View\Helper\EscapeHtml;
 
 /**
  * Form Element
  */
-class FormElement extends ZendFormElement
+class FormElement extends LaminasFormElement
 {
     /**
-     * @var \Zend\Form\View\Helper\FormLabel
+     * @var \Laminas\Form\View\Helper\FormLabel
      */
     protected $labelHelper;
 
     /**
-     * @var \Zend\Form\View\Helper\ZendFormElement
+     * @var \Laminas\Form\View\Helper\LaminasFormElement
      */
     protected $elementHelper;
 
     /**
-     * @var \Zend\View\Helper\EscapeHtml
+     * @var \Laminas\View\Helper\EscapeHtml
      */
     protected $escapeHelper;
 
     /**
-     * @var \Zend\Form\View\Helper\FormElementErrors
+     * @var \Laminas\Form\View\Helper\FormElementErrors
      */
     protected $elementErrorHelper;
 
@@ -54,7 +54,7 @@ class FormElement extends ZendFormElement
     /**
      * Set Label Helper
      *
-     * @param  Zend\Form\View\Helper\FormLabel $labelHelper
+     * @param  Laminas\Form\View\Helper\FormLabel $labelHelper
      *
      * @return self
      */
@@ -69,7 +69,7 @@ class FormElement extends ZendFormElement
     /**
      * Get Label Helper
      *
-     * @return \Zend\Form\View\Helper\FormLabel
+     * @return \Laminas\Form\View\Helper\FormLabel
      */
     public function getLabelHelper()
     {
@@ -83,7 +83,7 @@ class FormElement extends ZendFormElement
     /**
      * Set EscapeHtml Helper
      *
-     * @param  \Zend\View\Helper\EscapeHtml $escapeHelper
+     * @param  \Laminas\View\Helper\EscapeHtml $escapeHelper
      *
      * @return self
      */
@@ -98,7 +98,7 @@ class FormElement extends ZendFormElement
     /**
      * Get EscapeHtml Helper
      *
-     * @return \Zend\View\Helper\EscapeHtml
+     * @return \Laminas\View\Helper\EscapeHtml
      */
     public function getEscapeHtmlHelper()
     {
@@ -112,11 +112,11 @@ class FormElement extends ZendFormElement
     /**
      * Set Element Helper
      *
-     * @param  \Zend\Form\View\Helper\FormElement $elementHelper
+     * @param  \Laminas\Form\View\Helper\FormElement $elementHelper
      *
      * @return self
      */
-    public function setElementHelper(ZendFormElement $elementHelper)
+    public function setElementHelper(LaminasFormElement $elementHelper)
     {
         $elementHelper->setView($this->getView());
         $this->elementHelper = $elementHelper;
@@ -127,7 +127,7 @@ class FormElement extends ZendFormElement
     /**
      * Get Element Helper
      *
-     * @return \Zend\Form\View\Helper\FormElement
+     * @return \Laminas\Form\View\Helper\FormElement
      */
     public function getElementHelper()
     {
@@ -141,7 +141,7 @@ class FormElement extends ZendFormElement
     /**
      * Set Element Error Helper
      *
-     * @param  \Zend\Form\View\Helper\FormElementErrors $errorHelper
+     * @param  \Laminas\Form\View\Helper\FormElementErrors $errorHelper
      *
      * @return self
      */
@@ -157,7 +157,7 @@ class FormElement extends ZendFormElement
     /**
      * Get Element Error Helper
      *
-     * @return \Zend\Form\View\Helper\FormElementErrors
+     * @return \Laminas\Form\View\Helper\FormElementErrors
      */
     public function getElementErrorHelper()
     {
@@ -248,7 +248,7 @@ class FormElement extends ZendFormElement
     /**
      * Render
      *
-     * @param  \Zend\Form\ElementInterface $element
+     * @param  \Laminas\Form\ElementInterface $element
      * @param  string                      $groupWrapper
      * @param  string                      $controlWrapper
      *
@@ -276,13 +276,13 @@ class FormElement extends ZendFormElement
         $id = $element->getAttribute('id') ?: $element->getAttribute('name');
 
         if (method_exists($renderer, 'plugin')) {
-            if ($element instanceof \Zend\Form\Element\Radio) {
+            if ($element instanceof \Laminas\Form\Element\Radio) {
                 $renderer->plugin('form_radio')->setLabelAttributes(
                     [
                         'class' => 'radio',
                     ]
                 );
-            } elseif ($element instanceof \Zend\Form\Element\MultiCheckbox) {
+            } elseif ($element instanceof \Laminas\Form\Element\MultiCheckbox) {
                 $renderer->plugin('form_multi_checkbox')->setLabelAttributes(
                     [
                         'class' => 'checkbox',
@@ -319,7 +319,7 @@ class FormElement extends ZendFormElement
                 $controlLabel .= $escapeHelper($label);
             }
             $controlLabel .= $labelHelper->closeTag();
-            if ($element instanceof \Zend\Form\Element\Radio || $element instanceof \Zend\Form\Element\MultiCheckbox) {
+            if ($element instanceof \Laminas\Form\Element\Radio || $element instanceof \Laminas\Form\Element\MultiCheckbox) {
                 $controlLabel = str_replace(
                     [
                         '<label',
@@ -359,7 +359,7 @@ class FormElement extends ZendFormElement
     /**
      * Magical Invoke
      *
-     * @param  \Zend\Form\ElementInterface $element
+     * @param  \Laminas\Form\ElementInterface $element
      * @param  string                      $groupWrapper
      * @param  string                      $controlWrapper
      *

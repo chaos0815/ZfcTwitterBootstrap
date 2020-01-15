@@ -5,7 +5,7 @@
 
 namespace ZfcTwitterBootstrap\View\Helper;
 
-use Zend\View\Helper\Navigation as ZendNavigation;
+use Laminas\View\Helper\Navigation as ZendNavigation;
 
 /**
  * Navigation
@@ -35,7 +35,7 @@ class Navigation extends ZendNavigation
      * Lazy-loads an instance of Navigation\HelperLoader if none currently
      * registered.
      *
-     * @return \Zend\View\Helper\Navigation\PluginManager
+     * @return \Laminas\View\Helper\Navigation\PluginManager
      */
     public function getPluginManager()
     {

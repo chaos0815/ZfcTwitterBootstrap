@@ -6,9 +6,9 @@
 namespace ZfcTwitterBootstrap\View\Helper\Navigation;
 
 use RecursiveIteratorIterator;
-use Zend\View\Helper\Navigation\Menu as ZendMenu;
-use Zend\Navigation\AbstractContainer;
-use Zend\Navigation\Page\AbstractPage;
+use Laminas\View\Helper\Navigation\Menu as ZendMenu;
+use Laminas\Navigation\AbstractContainer;
+use Laminas\Navigation\Page\AbstractPage;
 
 /**
  * Helper for rendering menus from navigation containers
